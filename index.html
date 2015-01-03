@@ -8,9 +8,16 @@
         <p>
             Info + Instructions
         </p>
+        <form id="estimate_input" action="" method="post">
+            <input type="text" name="estimate" value="2h30m40s">
+            <input type="submit" value="Start">
+        </form>
         <p>
-            Estimate: Time Input/ Display<br>
-            Error Message / Current: Timer
+            Estimate: <span id="estimate_display">##:##:##</span>
+            <br>
+            Current: <span id="timer">##:##:##</span>
+            <br>
+            <input type="button" id="finish_timer" value="Finish" disabled=true>
         </p>
         <p>Results</p>
     </body>
