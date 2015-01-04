@@ -48,7 +48,15 @@
             function process_estimate() {
                 var display_text = "invalid input";
                 var estimate = parse_duration(document.getElementById("estimate_input").value);
-                if( estimate != null ) display_text = estimate.toString();
+                var timer = document.getElementById("timer");
+                var curr_time = new Date();
+                var updater = function(){ update_timer(timer, curr_time); }
+
+                if( estimate != null ){
+                    display_text = estimate.toString();
+                    updater();
+                    setInterval(updater, 250);
+                }
                 document.getElementById("estimate_display").innerHTML = display_text;
             }
 
@@ -69,7 +77,14 @@
                 dur = new duration(hour, min, sec);
                 dur.normalize();
                 return dur;
-                
+
+            }
+
+            function update_timer(element, start_time) {
+                var ms = new Date() - start_time;
+                var elapsed = new duration(0, 0, 0, ms);
+                elapsed.normalize();
+                element.innerHTML = elapsed.toString();
             }
 
         </script>
