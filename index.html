@@ -8,9 +8,9 @@
         <p>
             Info + Instructions
         </p>
-        <form id="estimate_input" action="" method="post">
-            <input type="text" name="estimate" value="2h30m40s">
-            <input type="submit" value="Start">
+        <form>
+            <input type="text" id="estimate_input" value="2h30m40s">
+            <input type="button" id="start_timer" value="Start" onclick="process_estimate()">
         </form>
         <p>
             Estimate: <span id="estimate_display">##:##:##</span>
@@ -20,6 +20,39 @@
             <input type="button" id="finish_timer" value="Finish" disabled=true>
         </p>
         <p>Results</p>
+
+        <script>
+            function process_estimate() {
+                var display_text = "invalid input";
+                var estimate = parse_duration(document.getElementById("estimate_input").value);
+                if( estimate.hour >= 0 )
+                    display_text = estimate.hour + ":" + estimate.min + ":" + estimate.sec;
+                document.getElementById("estimate_display").innerHTML = display_text;
+            }
+
+            function parse_duration(str) {
+                var h = -1, m = -1, s = -1;
+                var valid_expr = /^(\d+h)?(\d+m)?(\d+s)?$/i;
+                function parse_unit(regex) {
+                    var unit = parseInt(regex.exec(str), 10);
+                    return (isNaN(unit)) ? 0 : unit;
+                }
+
+                if( valid_expr.test(str) ){
+                    h = parse_unit( /\d+h/i );
+                    m = parse_unit( /\d+m/i );
+                    s = parse_unit( /\d+s/i );
+                }
+
+                m += Math.floor(s/60);
+                h += Math.floor(m/60);
+                m %= 60;
+                s %= 60;
+
+                return { hour: h, min: m, sec: s };
+            }
+
+        </script>
     </body>
 </html>
 
