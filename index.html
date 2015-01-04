@@ -22,34 +22,54 @@
         <p>Results</p>
 
         <script>
+            function duration(hours, minutes, seconds, milliseconds) {
+                this.hour = hours ? hours : 0;
+                this.min = minutes ? minutes : 0;
+                this.sec = seconds ? seconds : 0;
+                this.ms = milliseconds ? milliseconds : 0;
+
+                this.normalize = function() {
+                    this.sec += Math.floor(this.ms/1000);
+                    this.min += Math.floor(this.sec/60);
+                    this.hour += Math.floor(this.min/60);
+                    this.ms %= 1000;
+                    this.sec %= 60;
+                    this.min %= 60;
+                }
+
+                this.toString = function() {
+                    function pad(int_unit){
+                        return ((int_unit < 10 ) ? "0" : "") + int_unit;
+                    }
+                    return pad(this.hour).concat( ":", pad(this.min), ":", pad(this.sec) );
+                }
+            }
+
             function process_estimate() {
                 var display_text = "invalid input";
                 var estimate = parse_duration(document.getElementById("estimate_input").value);
-                if( estimate.hour >= 0 )
-                    display_text = estimate.hour + ":" + estimate.min + ":" + estimate.sec;
+                if( estimate != null ) display_text = estimate.toString();
                 document.getElementById("estimate_display").innerHTML = display_text;
             }
 
             function parse_duration(str) {
-                var h = -1, m = -1, s = -1;
+                var hour = -1, min = -1, sec = -1;
                 var valid_expr = /^(\d+h)?(\d+m)?(\d+s)?$/i;
+                var dur;
                 function parse_unit(regex) {
                     var unit = parseInt(regex.exec(str), 10);
                     return (isNaN(unit)) ? 0 : unit;
                 }
 
-                if( valid_expr.test(str) ){
-                    h = parse_unit( /\d+h/i );
-                    m = parse_unit( /\d+m/i );
-                    s = parse_unit( /\d+s/i );
-                }
+                if( !valid_expr.test(str) ) return null;
 
-                m += Math.floor(s/60);
-                h += Math.floor(m/60);
-                m %= 60;
-                s %= 60;
-
-                return { hour: h, min: m, sec: s };
+                hour = parse_unit( /\d+h/i );
+                min = parse_unit( /\d+m/i );
+                sec = parse_unit( /\d+s/i );
+                dur = new duration(hour, min, sec);
+                dur.normalize();
+                return dur;
+                
             }
 
         </script>
