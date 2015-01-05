@@ -22,27 +22,30 @@
         <p>Results</p>
 
         <script>
-            function duration(hours, minutes, seconds, milliseconds) {
-                this.hour = hours ? hours : 0;
-                this.min = minutes ? minutes : 0;
-                this.sec = seconds ? seconds : 0;
-                this.ms = milliseconds ? milliseconds : 0;
+            function duration(hour, min, sec, ms) {
+                var dur = new Date(0);
+                dur.setHours( dur.getHours() + ((hour) ? hour : 0) );
+                dur.setMinutes( dur.getMinutes() + ((min) ? min : 0) );
+                dur.setSeconds( dur.getSeconds() + ((sec) ? sec : 0) );
+                dur.setMilliseconds( dur.getMilliseconds() + ((ms) ? ms : 0) );
+                return dur;
+            }
 
-                this.normalize = function() {
-                    this.sec += Math.floor(this.ms/1000);
-                    this.min += Math.floor(this.sec/60);
-                    this.hour += Math.floor(this.min/60);
-                    this.ms %= 1000;
-                    this.sec %= 60;
-                    this.min %= 60;
-                }
+            Date.prototype.toDuration = function() {
+                var ms = Math.abs(this.getTime());
+                var hour = Math.floor( ms / (1000 * 60 * 60) );
+                var min = Math.floor( ms / (1000 * 60) ) % 60;
+                var sec = Math.floor( ms / 1000 ) % 60;
+                var prefix = (this.getTime() < 0) ? "-" : "";
+                function pad(i) { return ((i < 10) ? "0" : "") + i; }
+                return prefix.concat( pad(hour), ":", pad(min), ":", pad(sec) );
+            }
 
-                this.toString = function() {
-                    function pad(int_unit){
-                        return ((int_unit < 10 ) ? "0" : "") + int_unit;
-                    }
-                    return pad(this.hour).concat( ":", pad(this.min), ":", pad(this.sec) );
-                }
+            Date.prototype.add = function(date2) {
+                this.setMilliseconds( this.getMilliseconds() + date2.getTime() );
+            }
+            Date.prototype.subtract = function(date2) {
+                this.setMilliseconds( this.getMilliseconds() - date2.getTime() );
             }
 
             function process_estimate() {
@@ -53,7 +56,7 @@
                 var updater = function(){ update_timer(timer, curr_time); }
 
                 if( estimate != null ){
-                    display_text = estimate.toString();
+                    display_text = estimate.toDuration();
                     updater();
                     setInterval(updater, 250);
                 }
@@ -63,7 +66,6 @@
             function parse_duration(str) {
                 var hour = -1, min = -1, sec = -1;
                 var valid_expr = /^(\d+h)?(\d+m)?(\d+s)?$/i;
-                var dur;
                 function parse_unit(regex) {
                     var unit = parseInt(regex.exec(str), 10);
                     return (isNaN(unit)) ? 0 : unit;
@@ -74,17 +76,13 @@
                 hour = parse_unit( /\d+h/i );
                 min = parse_unit( /\d+m/i );
                 sec = parse_unit( /\d+s/i );
-                dur = new duration(hour, min, sec);
-                dur.normalize();
-                return dur;
-
+                return duration(hour, min, sec);
             }
 
             function update_timer(element, start_time) {
-                var ms = new Date() - start_time;
-                var elapsed = new duration(0, 0, 0, ms);
-                elapsed.normalize();
-                element.innerHTML = elapsed.toString();
+                var elapsed = new Date();
+                elapsed.subtract(start_time);
+                element.innerHTML = elapsed.toDuration();
             }
 
         </script>
