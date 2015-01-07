@@ -10,7 +10,7 @@
         </p>
         <form>
             <input type="text" id="estimate_input" value="2h30m40s">
-            <input type="button" id="start_timer" value="Start" onclick="process_estimate()">
+            <input type="button" id="start_timer" value="Start" disabled=true>
         </form>
         <p>
             Estimate: <span id="estimate_display">##:##:##</span>
@@ -19,9 +19,35 @@
             <br>
             <input type="button" id="finish_timer" value="Finish" disabled=true>
         </p>
-        <p>Results</p>
+
+        <p id="results">
+            Accuracy: <span id="accuracy"></span>%, off by <span id="offset"></span>
+            <br>
+            Started: <span id="start_time"></span> 
+            <br>
+            Ended: <span id="end_time"></span>
+        </p>
 
         <script>
+
+            // Set button states to override any cached states
+            window.onload = function() {
+                var start_bt = document.getElementById("start_timer");
+                start_bt.onclick = process_estimate;
+                start_bt.disabled = false;
+                reset_display();
+                document.getElementById("finish_timer").disabled = true;
+            };
+
+            function reset_display() {
+                document.getElementById("estimate_display").innerHTML = "";
+                document.getElementById("timer").innerHTML = "";
+                document.getElementById("accuracy").innerHTML = "##";
+                document.getElementById("offset").innerHTML = "##:##:##";
+                document.getElementById("start_time").innerHTML = "";
+                document.getElementById("end_time").innerHTML = "";
+            }
+
             function duration(hour, min, sec, ms) {
                 var dur = new Date(0);
                 dur.setHours( dur.getHours() + ((hour) ? hour : 0) );
@@ -53,12 +79,18 @@
                 var estimate = parse_duration(document.getElementById("estimate_input").value);
                 var timer = document.getElementById("timer");
                 var curr_time = new Date();
+                var finish_bt = document.getElementById("finish_timer");
                 var updater = function(){ update_timer(timer, curr_time); }
-
+                var updaterID;
+                reset_display();
                 if( estimate != null ){
+                    document.getElementById("start_timer").disabled = true;
+                    document.getElementById("start_time").innerHTML = curr_time.toLocaleString();
                     display_text = estimate.toDuration();
                     updater();
-                    setInterval(updater, 250);
+                    updaterID = setInterval(updater, 250);
+                    finish_bt.onclick = function() { finish_timer( updaterID, curr_time, estimate) };
+                    finish_bt.disabled = false;
                 }
                 document.getElementById("estimate_display").innerHTML = display_text;
             }
@@ -85,6 +117,29 @@
                 element.innerHTML = elapsed.toDuration();
             }
 
+            function finish_timer(updaterID, start_time, estimated_time) {
+                var curr_time;
+                document.getElementById("finish_timer").disabled = true;
+                curr_time = new Date();
+                clearInterval(updaterID);
+
+                // Update timer incase there was significant delay in stopping timer
+                var elapsed = new Date(curr_time - start_time);
+                document.getElementById("timer").innerHTML = elapsed.toDuration();
+
+                // Truncate ms to prevent diff's seconds being off by 1
+                curr_time.setMilliseconds(0);
+                elapsed.setMilliseconds(0);
+
+                var diff = duration(0, 0, 0, Math.abs(elapsed - estimated_time));
+                var acc = (estimated_time < elapsed) ? estimated_time / elapsed : elapsed / estimated_time;
+                acc = (acc * 100).toFixed(2);
+
+                document.getElementById("accuracy").innerHTML = acc;
+                document.getElementById("offset").innerHTML = diff.toDuration();
+                document.getElementById("end_time").innerHTML = curr_time.toLocaleString();
+                document.getElementById("start_timer").disabled = false;
+            }
         </script>
     </body>
 </html>
