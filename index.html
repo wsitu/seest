@@ -9,23 +9,23 @@
             Info + Instructions
         </p>
         <form>
-            <input type="text" id="estimate_input" value="2h30m40s">
-            <input type="button" id="start_timer" value="Start" disabled=true>
+            <input type="text" id="estimateInput" value="2h30m40s">
+            <input type="button" id="startBt" value="Start" disabled=true>
         </form>
         <p>
-            Estimate: <span id="estimate_display">##:##:##</span>
+            Estimate: <span id="estimate"></span>
             <br>
-            Current: <span id="timer">##:##:##</span>
+            Current: <span id="timer"></span>
             <br>
-            <input type="button" id="finish_timer" value="Finish" disabled=true>
+            <input type="button" id="finishBt" value="Finish" disabled=true>
         </p>
 
         <p id="results">
             Accuracy: <span id="accuracy"></span>%, off by <span id="offset"></span>
             <br>
-            Started: <span id="start_time"></span> 
+            Started: <span id="started"></span> 
             <br>
-            Ended: <span id="end_time"></span>
+            Ended: <span id="ended"></span>
         </p>
 
         <script>
@@ -34,111 +34,105 @@
 
             // Set button states to override any cached states
             window.onload = function() {
-                var start_bt = document.getElementById("start_timer");
-                start_bt.onclick = process_estimate;
-                start_bt.disabled = false;
-                reset_display();
-                document.getElementById("finish_timer").disabled = true;
+                var start = document.getElementById("startBt");
+                start.onclick = processEstimate;
+                start.disabled = false;
+                resetDisplay();
+                document.getElementById("finishBt").disabled = true;
             };
 
-            function reset_display() {
-                document.getElementById("estimate_display").innerHTML = "";
+            function resetDisplay() {
+                document.getElementById("estimate").innerHTML = "";
                 document.getElementById("timer").innerHTML = "";
                 document.getElementById("accuracy").innerHTML = "##";
                 document.getElementById("offset").innerHTML = "##:##:##";
-                document.getElementById("start_time").innerHTML = "";
-                document.getElementById("end_time").innerHTML = "";
+                document.getElementById("started").innerHTML = "";
+                document.getElementById("ended").innerHTML = "";
             }
 
             function duration(hour, min, sec, ms) {
                 var dur = new Date(0);
-                dur.setHours( dur.getHours() + ((hour) ? hour : 0) );
-                dur.setMinutes( dur.getMinutes() + ((min) ? min : 0) );
-                dur.setSeconds( dur.getSeconds() + ((sec) ? sec : 0) );
-                dur.setMilliseconds( dur.getMilliseconds() + ((ms) ? ms : 0) );
+                dur.setMilliseconds( dur.getMilliseconds() + ((ms)   ? ms   : 0) );
+                dur.setSeconds(      dur.getSeconds()      + ((sec)  ? sec  : 0) );
+                dur.setMinutes(      dur.getMinutes()      + ((min)  ? min  : 0) );
+                dur.setHours(        dur.getHours()        + ((hour) ? hour : 0) );
                 return dur;
             }
 
             Date.prototype.toDuration = function() {
                 var ms = Math.abs(this.getTime());
+                var sec  = Math.floor( ms / (1000          ) ) % 60;
+                var min  = Math.floor( ms / (1000 * 60     ) ) % 60;
                 var hour = Math.floor( ms / (1000 * 60 * 60) );
-                var min = Math.floor( ms / (1000 * 60) ) % 60;
-                var sec = Math.floor( ms / 1000 ) % 60;
                 var prefix = (this.getTime() < 0) ? "-" : "";
-                function pad(i) { return ((i < 10) ? "0" : "") + i; }
+                function pad(i) { return ( (i < 10) ? "0" : "" ) + i; }
                 return prefix.concat( pad(hour), ":", pad(min), ":", pad(sec) );
             }
 
-            Date.prototype.add = function(date2) {
-                this.setMilliseconds( this.getMilliseconds() + date2.getTime() );
-            }
-            Date.prototype.subtract = function(date2) {
-                this.setMilliseconds( this.getMilliseconds() - date2.getTime() );
-            }
-
-            function process_estimate() {
-                var display_text = "invalid input";
-                var estimate = parse_duration(document.getElementById("estimate_input").value);
+            function processEstimate() {
+                var estimateText = "invalid input";
+                var estimate = parseDuration(document.getElementById("estimateInput").value);
                 var timer = document.getElementById("timer");
-                var curr_time = new Date();
-                curr_time.setMilliseconds(0);
-                var finish_bt = document.getElementById("finish_timer");
-                var updater = function(){ update_timer(timer, curr_time); }
+                var currTime = new Date();
+                currTime.setMilliseconds(0);
+                var finish = document.getElementById("finishBt");
+                var updater = function(){ updateTimer(timer, currTime); }
                 var updaterID;
-                reset_display();
+                resetDisplay();
                 if( estimate != null ){
-                    document.getElementById("start_timer").disabled = true;
-                    document.getElementById("start_time").innerHTML = curr_time.toLocaleString();
-                    display_text = estimate.toDuration();
+                    document.getElementById("startBt").disabled = true;
+                    document.getElementById("started").innerHTML = currTime.toLocaleString();
+                    estimateText = estimate.toDuration();
                     updater();
                     updaterID = setInterval(updater, 250);
-                    finish_bt.onclick = function() { finish_timer( updaterID, curr_time, estimate) };
-                    finish_bt.disabled = false;
+                    finish.onclick = function() { processResult( updaterID, currTime, estimate) };
+                    finish.disabled = false;
                 }
-                document.getElementById("estimate_display").innerHTML = display_text;
+                document.getElementById("estimate").innerHTML = estimateText;
             }
 
-            function parse_duration(str) {
+            function parseDuration(str) {
                 var hour = -1, min = -1, sec = -1;
-                var valid_expr = /^(\d+h)?(\d+m)?(\d+s)?$/i;
-                function parse_unit(regex) {
+                var validExpr = /^(\d+h)?(\d+m)?(\d+s)?$/i;
+                function parseUnit(regex) {
                     var unit = parseInt(regex.exec(str), 10);
                     return (isNaN(unit)) ? 0 : unit;
                 }
 
-                if( !valid_expr.test(str) ) return null;
+                if( !validExpr.test(str) ) return null;
 
-                hour = parse_unit( /\d+h/i );
-                min = parse_unit( /\d+m/i );
-                sec = parse_unit( /\d+s/i );
+                hour = parseUnit( /\d+h/i );
+                min  = parseUnit( /\d+m/i );
+                sec  = parseUnit( /\d+s/i );
                 return duration(hour, min, sec);
             }
 
-            function update_timer(element, start_time) {
+            function updateTimer(element, startTime) {
                 var elapsed = new Date();
                 elapsed.setMilliseconds(0);
-                elapsed.subtract(start_time);
+                elapsed.setTime( elapsed.getTime() - startTime.getTime() );
                 element.innerHTML = elapsed.toDuration();
             }
 
-            function finish_timer(updaterID, start_time, estimated_time) {
-                var curr_time;
-                document.getElementById("finish_timer").disabled = true;
-                curr_time = new Date();
+            function processResult(updaterID, startTime, estimate) {
+                var currTime;
+                document.getElementById("finishBt").disabled = true;
+                currTime = new Date();
                 clearInterval(updaterID);
-                curr_time.setMilliseconds(0);
-                // Update timer incase there was significant delay in stopping timer
-                var elapsed = new Date(curr_time - start_time);
+                currTime.setMilliseconds(0);
+
+                // (hotfix) Update timer incase there was significant delay in stopping timer
+                var elapsed = new Date(currTime - startTime);
                 document.getElementById("timer").innerHTML = elapsed.toDuration();
 
-                var diff = duration(0, 0, 0, Math.abs(elapsed - estimated_time));
-                var acc = (estimated_time < elapsed) ? estimated_time / elapsed : elapsed / estimated_time;
+                var diff = duration(0, 0, 0, Math.abs(elapsed - estimate));
+                var acc = (estimate < elapsed) ? estimate / elapsed : elapsed / estimate;
                 acc = (acc * 100).toFixed(2);
 
                 document.getElementById("accuracy").innerHTML = acc;
                 document.getElementById("offset").innerHTML = diff.toDuration();
-                document.getElementById("end_time").innerHTML = curr_time.toLocaleString();
-                document.getElementById("start_timer").disabled = false;
+                document.getElementById("startBt").disabled = false;
+                document.getElementById("ended").innerHTML = currTime.toLocaleString();
             }
         </script>
     </body>
