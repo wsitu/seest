@@ -29,6 +29,8 @@
         </p>
 
         <script>
+            // Truncated Date ms (not displayed to users) so timer
+            // isn't off by 1 second compared to start/end times.
 
             // Set button states to override any cached states
             window.onload = function() {
@@ -79,6 +81,7 @@
                 var estimate = parse_duration(document.getElementById("estimate_input").value);
                 var timer = document.getElementById("timer");
                 var curr_time = new Date();
+                curr_time.setMilliseconds(0);
                 var finish_bt = document.getElementById("finish_timer");
                 var updater = function(){ update_timer(timer, curr_time); }
                 var updaterID;
@@ -113,6 +116,7 @@
 
             function update_timer(element, start_time) {
                 var elapsed = new Date();
+                elapsed.setMilliseconds(0);
                 elapsed.subtract(start_time);
                 element.innerHTML = elapsed.toDuration();
             }
@@ -122,14 +126,10 @@
                 document.getElementById("finish_timer").disabled = true;
                 curr_time = new Date();
                 clearInterval(updaterID);
-
+                curr_time.setMilliseconds(0);
                 // Update timer incase there was significant delay in stopping timer
                 var elapsed = new Date(curr_time - start_time);
                 document.getElementById("timer").innerHTML = elapsed.toDuration();
-
-                // Truncate ms to prevent diff's seconds being off by 1
-                curr_time.setMilliseconds(0);
-                elapsed.setMilliseconds(0);
 
                 var diff = duration(0, 0, 0, Math.abs(elapsed - estimated_time));
                 var acc = (estimated_time < elapsed) ? estimated_time / elapsed : elapsed / estimated_time;
