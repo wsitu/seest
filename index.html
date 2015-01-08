@@ -29,8 +29,6 @@
         </p>
 
         <script>
-            // Truncated Date ms (not displayed to users) so timer
-            // isn't off by 1 second compared to start/end times.
 
             // Set button states to override any cached states
             window.onload = function() {
@@ -89,8 +87,7 @@
                 var estimateText = "invalid input";
                 var estimate = parseEstimate(document.getElementById("estimateInput").value);
                 var timer = document.getElementById("timer");
-                var currTime = new Date();
-                currTime.setMilliseconds(0);
+                var currTime = nowTrimMs();
                 var finish = document.getElementById("finishBt");
                 var updater = function(){ updateTimer(timer, currTime); }
                 var updaterID;
@@ -123,9 +120,15 @@
                 return duration(hour, min, sec);
             }
 
+            // Time/duration may be off by 1sec if ms is not removed.
+            function nowTrimMs() {
+                var now = new Date();
+                now.setMilliseconds(0);
+                return now;
+            }
+
             function updateTimer(element, startTime) {
-                var elapsed = new Date();
-                elapsed.setMilliseconds(0);
+                var elapsed = nowTrimMs();
                 elapsed.setTime( elapsed.getTime() - startTime.getTime() );
                 element.innerHTML = elapsed.toDuration();
             }
