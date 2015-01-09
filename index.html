@@ -39,15 +39,20 @@
                 document.getElementById("finishBt").disabled = true;
             };
 
-            function resetDisplay() {
-                document.getElementById("estimate").innerHTML = "";
-                document.getElementById("timer").innerHTML = "";
-                document.getElementById("accuracy").innerHTML = "##";
-                document.getElementById("offset").innerHTML = "##:##:##";
-                document.getElementById("started").innerHTML = "";
-                document.getElementById("ended").innerHTML = "";
+            // Formats Date's total time into a string with the form HH:MM:SS.
+            // Hour section can span more than 2 digits and is negative if the
+            // date represents a negative duration.
+            Date.prototype.toDuration = function() {
+                var ms = Math.abs(this.getTime());
+                var sec  = Math.floor( ms / (1000          ) ) % 60;
+                var min  = Math.floor( ms / (1000 * 60     ) ) % 60;
+                var hour = Math.floor( ms / (1000 * 60 * 60) );
+                var prefix = (this.getTime() < 0) ? "-" : "";
+                function pad(i) { return ( (i < 10) ? "0" : "" ) + i; }
+                return prefix.concat( pad(hour), ":", pad(min), ":", pad(sec) );
             }
 
+            // Returns a data object set up as a relative time span.
             function duration(hour, min, sec, ms, scale) {
                 function toInt(str){
                     var num = parseInt(str, 10);
@@ -64,6 +69,8 @@
                 return dur;
             }
 
+            // Returns str as a duration(date object) or null if not in the
+            // format "H:M:S" or "-H:M:S".
             function parseDuration(str) {
                 var valid_expr = /^-?\d+:\d+:\d+$/;
                 if(!valid_expr.test(str)) return null;
@@ -73,37 +80,9 @@
                 return duration(durUnits[0], durUnits[1], durUnits[2], 0, sign);
             }
 
-            Date.prototype.toDuration = function() {
-                var ms = Math.abs(this.getTime());
-                var sec  = Math.floor( ms / (1000          ) ) % 60;
-                var min  = Math.floor( ms / (1000 * 60     ) ) % 60;
-                var hour = Math.floor( ms / (1000 * 60 * 60) );
-                var prefix = (this.getTime() < 0) ? "-" : "";
-                function pad(i) { return ( (i < 10) ? "0" : "" ) + i; }
-                return prefix.concat( pad(hour), ":", pad(min), ":", pad(sec) );
-            }
-
-            function processEstimate() {
-                var estimateText = "invalid input";
-                var estimate = parseEstimate(document.getElementById("estimateInput").value);
-                var timer = document.getElementById("timer");
-                var currTime = nowTrimMs();
-                var finish = document.getElementById("finishBt");
-                var updater = function(){ updateTimer(timer, currTime); }
-                var updaterID;
-                resetDisplay();
-                if( estimate != null ){
-                    document.getElementById("startBt").disabled = true;
-                    document.getElementById("started").innerHTML = currTime.toLocaleString();
-                    estimateText = estimate.toDuration();
-                    updater();
-                    updaterID = setInterval(updater, 250);
-                    finish.onclick = function() { processResult( updaterID, currTime, estimate) };
-                    finish.disabled = false;
-                }
-                document.getElementById("estimate").innerHTML = estimateText;
-            }
-
+            // Returns str as a duration(date object) or null if not in the
+            // format "#h#m#s" where #h, #m, #s are optional. If str is an
+            // empty string "" duration is set as 00:00:00.
             function parseEstimate(str) {
                 var hour = -1, min = -1, sec = -1;
                 var validExpr = /^(\d+h)?(\d+m)?(\d+s)?$/i;
@@ -120,17 +99,24 @@
                 return duration(hour, min, sec);
             }
 
-            // Time/duration may be off by 1sec if ms is not removed.
-            function nowTrimMs() {
-                var now = new Date();
-                now.setMilliseconds(0);
-                return now;
-            }
-
-            function updateTimer(element, startTime) {
-                var elapsed = nowTrimMs();
-                elapsed.setTime( elapsed.getTime() - startTime.getTime() );
-                element.innerHTML = elapsed.toDuration();
+            function processEstimate() {
+                var currTime = nowTrimMs();
+                var estimateText = "invalid input";
+                var estimate = parseEstimate(document.getElementById("estimateInput").value);
+                var timer = document.getElementById("timer");
+                var finish = document.getElementById("finishBt");
+                var updater = function(){ updateTimer(timer, currTime); }
+                resetDisplay();
+                if( estimate != null ){
+                    document.getElementById("startBt").disabled = true;
+                    document.getElementById("started").innerHTML = currTime.toLocaleString();
+                    estimateText = estimate.toDuration();
+                    updater();
+                    var updaterID = setInterval(updater, 250);
+                    finish.onclick = function() { processResult( updaterID, currTime, estimate) };
+                    finish.disabled = false;
+                }
+                document.getElementById("estimate").innerHTML = estimateText;
             }
 
             function processResult(updaterID, startTime, estimate) {
@@ -148,6 +134,29 @@
                 document.getElementById("startBt").disabled = false;
                 document.getElementById("ended").innerHTML = endTime.toLocaleString();
             }
+
+            // Time/duration may be off by 1sec if ms is not removed.
+            function nowTrimMs() {
+                var now = new Date();
+                now.setMilliseconds(0);
+                return now;
+            }
+
+            function resetDisplay() {
+                document.getElementById("estimate").innerHTML = "";
+                document.getElementById("timer").innerHTML = "";
+                document.getElementById("accuracy").innerHTML = "##";
+                document.getElementById("offset").innerHTML = "##:##:##";
+                document.getElementById("started").innerHTML = "";
+                document.getElementById("ended").innerHTML = "";
+            }
+
+            function updateTimer(element, startTime) {
+                var elapsed = nowTrimMs();
+                elapsed.setTime( elapsed.getTime() - startTime.getTime() );
+                element.innerHTML = elapsed.toDuration();
+            }
+
         </script>
     </body>
 </html>
