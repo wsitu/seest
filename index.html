@@ -3,15 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>seest - Self Estimate Timer</title>
+        <link rel="stylesheet" type="text/css" href="asset/css/seest.css">
     </head>
     <body>
-        <p>
-            Info + Instructions
-        </p>
-        <form>
-            <input type="text" id="estimateInput" value="2h30m40s">
-            <input type="button" id="startBt" value="Start" disabled=true>
-        </form>
+        <section id="formContainer">
+            <form>
+                <fieldset>
+                    <label>Activity</label>
+                    <input type="text" id="activityInput" placeholder="Groceries">
+                </fieldset>
+                <fieldset>
+                    <label>Estimate</label>
+                    <input type="text" id="estimateInput" placeholder="1h15m40s">
+                </fieldset>
+                <input type="button" id="startBt" value="Start" disabled=true>
+            </form>
+        </section>
         <p>
             Estimate: <span id="estimate"></span>
             <br>
@@ -27,7 +34,6 @@
             <br>
             Ended: <span id="ended"></span>
         </p>
-
         <script>
 
             // Set button states to override any cached states
