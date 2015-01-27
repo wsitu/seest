@@ -78,14 +78,13 @@ function processEstimate() {
     resetDisplay();
     if( estimate != null ){
         document.getElementById("startBt").disabled = true;
-        document.getElementById("started").innerHTML = currTime.toLocaleString();
         estimateText = estimate.toDuration();
         updater();
         var updaterID = setInterval(updater, 250);
         finish.onclick = function() { processResult( updaterID, currTime, estimate) };
         finish.disabled = false;
     }
-    document.getElementById("estimate").innerHTML = estimateText;
+    writeClassInner("estimateDisplay", estimateText);
 }
 
 function processResult(updaterID, startTime, estimate) {
@@ -98,10 +97,11 @@ function processResult(updaterID, startTime, estimate) {
     var acc = (estimate < elapsed) ? estimate / elapsed : elapsed / estimate;
     acc = (acc * 100).toFixed(2);
 
-    document.getElementById("accuracy").innerHTML = acc;
-    document.getElementById("offset").innerHTML = diff.toDuration();
-    document.getElementById("startBt").disabled = false;
-    document.getElementById("ended").innerHTML = endTime.toLocaleString();
+    writeClassInner("accuracyDisplay", acc);
+    writeClassInner("differenceDisplay", diff.toDuration() );
+    writeClassInner("startDisplay", startTime.toLocaleString() );
+    writeClassInner("endDisplay", endTime.toLocaleString() );
+   document.getElementById("startBt").disabled = false;
 }
 
 // Time/duration may be off by 1sec if ms is not removed.
@@ -112,12 +112,12 @@ function nowTrimMs() {
 }
 
 function resetDisplay() {
-    document.getElementById("estimate").innerHTML = "";
+    writeClassInner("estimateDisplay", "" );
     document.getElementById("timer").innerHTML = "";
-    document.getElementById("accuracy").innerHTML = "##";
-    document.getElementById("offset").innerHTML = "##:##:##";
-    document.getElementById("started").innerHTML = "";
-    document.getElementById("ended").innerHTML = "";
+    writeClassInner("accuracyDisplay", "##");
+    writeClassInner("differenceDisplay", "" );
+    writeClassInner("startDisplay", "" );
+    writeClassInner("endDisplay", "" );
 }
 
 function updateTimer(element, startTime) {
@@ -126,3 +126,8 @@ function updateTimer(element, startTime) {
     element.innerHTML = elapsed.toDuration();
 }
 
+function writeClassInner(className, text) {
+    var elements = document.getElementsByClassName(className);
+    for( var i = 0; i < elements.length; i++ )
+        elements[i].innerHTML = text;
+}

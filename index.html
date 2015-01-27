@@ -20,27 +20,28 @@
                 <input type="button" id="startBt" value="Start" disabled=true>
             </form>
         </section>
-        <section id="timerContainer"> 
-            <h2>Estimate: <span id="estimate"></span></h2>
+        <section id="timerContainer">
+            <h2><span class="activityDisplay"> ~ <span class="estimateDisplay"></span></h2>
             <span id="timer"></span>
             <input type="button" id="finishBt" value="Finish" disabled=true>
         </section>
 
         <section id="resultContainer">
+            <h2 class="activityDisplay"></h2>
             <div id="resultDataContainer">
                 <table>
-                    <tr> <th>Accuracy</th> <td id="accuracy"></td> </tr>
+                    <tr> <th>Accuracy</th> <td class="accuracyDisplay"></td> </tr>
                 </table>
                 <hr>
                 <table>
-                    <tr> <th>Actual</th>   <td id=""></td> </tr>
-                    <tr> <th>Estimate</th> <td id=""></td> </tr>
-                    <tr> <th>Offset</th>   <td id="offset"></td> </tr>
+                    <tr> <th>Duration</th>   <td class="durationDisplay"></td> </tr>
+                    <tr> <th>Estimate</th>   <td class="estimateDisplay"></td> </tr>
+                    <tr> <th>Difference</th> <td class="differenceDisplay"></td> </tr>
                 </table>
                 <hr>
                 <table>
-                    <tr> <th>Started</th> <td id="started"></td> </tr>
-                    <tr> <th>Ended</th>   <td id="ended"></td> </tr>
+                    <tr> <th>Started</th> <td class="startDisplay"></td> </tr>
+                    <tr> <th>Ended</th>   <td class="endDisplay"></td> </tr>
                 </table>
             </div>
         </section>

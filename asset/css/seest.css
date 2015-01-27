@@ -73,7 +73,7 @@ h2 {
     margin: 0 auto;
 }
 
-#accuracy{
+.accuracyDisplay{
     font-size: 1.6rem;
     text-align: center;
 }
