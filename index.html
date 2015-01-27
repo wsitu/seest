@@ -19,21 +19,30 @@
                 <input type="button" id="startBt" value="Start" disabled=true>
             </form>
         </section>
-        <p>
-            Estimate: <span id="estimate"></span>
-            <br>
-            Current: <span id="timer"></span>
-            <br>
+        <section id="timerContainer"> 
+            <h2>Estimate: <span id="estimate"></span></h2>
+            <span id="timer"></span>
             <input type="button" id="finishBt" value="Finish" disabled=true>
-        </p>
+        </section>
 
-        <p id="results">
-            Accuracy: <span id="accuracy"></span>%, off by <span id="offset"></span>
-            <br>
-            Started: <span id="started"></span> 
-            <br>
-            Ended: <span id="ended"></span>
-        </p>
+        <section id="resultContainer">
+            <div id="resultDataContainer">
+                <table>
+                    <tr> <th>Accuracy</th> <td id="accuracy"></td> </tr>
+                </table>
+                <hr>
+                <table>
+                    <tr> <th>Actual</th>   <td id=""></td> </tr>
+                    <tr> <th>Estimate</th> <td id=""></td> </tr>
+                    <tr> <th>Offset</th>   <td id="offset"></td> </tr>
+                </table>
+                <hr>
+                <table>
+                    <tr> <th>Started</th> <td id="started"></td> </tr>
+                    <tr> <th>Ended</th>   <td id="ended"></td> </tr>
+                </table>
+            </div>
+        </section>
         <script>
 
             // Set button states to override any cached states

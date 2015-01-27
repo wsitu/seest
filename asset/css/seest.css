@@ -7,7 +7,6 @@ html { font-size: 1em; }
 section {
     padding: 32px;
 }
-
 input[type=text] {
     font-size: 1rem;
     border: none;
@@ -51,5 +50,52 @@ label {
     color: gray;
 }
 
-p { display:none;}
+
+#timerContainer {
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: normal;
+    color: gray;
+}
+
+#timer{
+    font-size: 3rem;
+    font-weight: normal;
+    font-family: Monospace;
+    color: gray;
+}
+
+#resultDataContainer {
+    width: 20rem;
+    margin: 0 auto;
+}
+
+#accuracy{
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+table {
+    vertical-align: center;
+}
+
+hr{
+    margin: 0.2rem 0rem;
+}
+
+th{
+    width: 6rem;
+    padding-left: 1rem;
+    font-size: 1rem;
+    text-align: left;
+    color: gray;
+}
+
+td{
+    text-align: right;
+    color: gray;
+}
 
