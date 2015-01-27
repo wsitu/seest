@@ -93,11 +93,12 @@ function processResult(updaterID, startTime, estimate) {
 
     var elapsed = parseDuration(document.getElementById("timer").innerHTML);
     var endTime = new Date(startTime.getTime() + elapsed.getTime());
-    var diff = duration(0, 0, 0, Math.abs(elapsed - estimate));
+    var diff = duration(0, 0, 0, (elapsed - estimate));
     var acc = (estimate < elapsed) ? estimate / elapsed : elapsed / estimate;
-    acc = (acc * 100).toFixed(2);
+    acc = (acc * 100).toFixed(2) + "%";
 
     writeClassInner("accuracyDisplay", acc);
+    writeClassInner("durationDisplay", elapsed.toDuration() );
     writeClassInner("differenceDisplay", diff.toDuration() );
     writeClassInner("startDisplay", startTime.toLocaleString() );
     writeClassInner("endDisplay", endTime.toLocaleString() );

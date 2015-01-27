@@ -88,9 +88,9 @@ hr{
 
 th{
     width: 6rem;
-    padding-left: 1rem;
+    padding: 0 1rem 0 0.5rem;
     font-size: 1rem;
-    text-align: left;
+    text-align: right;
     color: gray;
 }
 
@@ -99,3 +99,6 @@ td{
     color: gray;
 }
 
+td.differenceDisplay{
+    border-top: 1px solid gray;
+}
