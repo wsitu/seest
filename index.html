@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
     <head>
         <meta charset="utf-8">
         <title>seest - Self Estimate Timer</title>
@@ -15,7 +13,9 @@
                 </fieldset>
                 <fieldset>
                     <label>Estimate</label>
-                    <input type="text" name="estimate" placeholder="1h15m40s">
+                    <input type="text" name="estimate" placeholder="1h15m40s"
+                     pattern="(\d+[hH])?(\d+[mM])?(\d+[sS])?"
+                     title="The hours minutes, and seconds of the estimate in the form #h#m#s">
                 </fieldset>
                 <input type="button" id="startBt" value="Start" disabled=true>
             </form>

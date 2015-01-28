@@ -71,22 +71,20 @@ function parseEstimate(str) {
 function processEstimate() {
     var currTime = nowTrimMs();
     var estForm = document.getElementById("estimateForm");
-    var estimateText = "invalid input";
     var estimate = parseEstimate(estForm["estimate"].value);
-    var timer = document.getElementById("timer");
     var finish = document.getElementById("finishBt");
+    var timer = document.getElementById("timer");
     var updater = function(){ updateTimer(timer, currTime); }
     resetDisplay();
     if( estimate != null ){
         document.getElementById("startBt").disabled = true;
-        estimateText = estimate.toDuration();
         updater();
         var updaterID = setInterval(updater, 250);
+        writeClassInner("activityDisplay", estForm["activity"].value);
+        writeClassInner("estimateDisplay", estimate.toDuration());
         finish.onclick = function() { processResult( updaterID, currTime, estimate) };
         finish.disabled = false;
-        writeClassInner("activityDisplay", estForm["activity"].value);
     }
-    writeClassInner("estimateDisplay", estimateText);
 }
 
 function processResult(updaterID, startTime, estimate) {

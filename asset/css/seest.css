@@ -16,6 +16,9 @@ input[type=text] {
     border-radius: 0.25rem;
     box-shadow: inset 0rem 0.1rem 0.2rem 0rem gray;
 }
+input:invalid {
+    background: pink;
+}
 
 input[type=button] {
     display:block;
@@ -49,7 +52,6 @@ label {
     vertical-align: middle;
     color: gray;
 }
-
 
 #timerContainer {
     text-align: center;
