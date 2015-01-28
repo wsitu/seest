@@ -8,20 +8,20 @@
     </head>
     <body>
         <section id="formContainer">
-            <form>
+            <form id="estimateForm">
                 <fieldset>
                     <label>Activity</label>
-                    <input type="text" id="activityInput" placeholder="Groceries">
+                    <input type="text" name="activity" placeholder="Groceries">
                 </fieldset>
                 <fieldset>
                     <label>Estimate</label>
-                    <input type="text" id="estimateInput" placeholder="1h15m40s">
+                    <input type="text" name="estimate" placeholder="1h15m40s">
                 </fieldset>
                 <input type="button" id="startBt" value="Start" disabled=true>
             </form>
         </section>
         <section id="timerContainer">
-            <h2><span class="activityDisplay"> ~ <span class="estimateDisplay"></span></h2>
+            <h2><span class="activityDisplay"></span> ~ <span class="estimateDisplay"></span></h2>
             <span id="timer"></span>
             <input type="button" id="finishBt" value="Finish" disabled=true>
         </section>

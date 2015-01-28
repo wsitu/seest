@@ -70,8 +70,9 @@ function parseEstimate(str) {
 
 function processEstimate() {
     var currTime = nowTrimMs();
+    var estForm = document.getElementById("estimateForm");
     var estimateText = "invalid input";
-    var estimate = parseEstimate(document.getElementById("estimateInput").value);
+    var estimate = parseEstimate(estForm["estimate"].value);
     var timer = document.getElementById("timer");
     var finish = document.getElementById("finishBt");
     var updater = function(){ updateTimer(timer, currTime); }
@@ -83,6 +84,7 @@ function processEstimate() {
         var updaterID = setInterval(updater, 250);
         finish.onclick = function() { processResult( updaterID, currTime, estimate) };
         finish.disabled = false;
+        writeClassInner("activityDisplay", estForm["activity"].value);
     }
     writeClassInner("estimateDisplay", estimateText);
 }
@@ -116,6 +118,7 @@ function resetDisplay() {
     writeClassInner("estimateDisplay", "" );
     document.getElementById("timer").innerHTML = "";
     writeClassInner("accuracyDisplay", "##");
+    writeClassInner("activityDisplay", "");
     writeClassInner("differenceDisplay", "" );
     writeClassInner("startDisplay", "" );
     writeClassInner("endDisplay", "" );
