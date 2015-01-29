@@ -1,34 +1,32 @@
+/* Stylesheet for the seest page */
+
 * {
+    color: gray;
     margin: 0;
     padding 0;
 }
-html { font-size: 1em; }
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: normal;
+    text-align: center;
+}
 
 section {
     padding: 32px;
 }
-input[type=text] {
-    font-size: 1rem;
-    border: none;
-    padding: 0 0 0 0.5rem;
-    height: 2rem;
-    vertical-align: middle;
-    border-radius: 0.25rem;
-    box-shadow: inset 0rem 0.1rem 0.2rem 0rem gray;
-}
-input:invalid {
-    background: pink;
-}
 
-input[type=button] {
-    display:block;
-    font-size: 1.2rem;
-    margin: 0.6rem auto;
-    border: 1px solid gray;
-    height: 2.5rem;
-    width: 12rem;
-    border-radius: 5rem;
-    background: linear-gradient(to bottom, white, lightgray);
+
+
+
+/******************************************************************************
+*                                    Form                                     *
+******************************************************************************/
+fieldset {
+    border: none;
+    margin: 0 auto;
+    padding: 0.4rem;
+    text-align: center;
 }
 
 form{
@@ -36,75 +34,110 @@ form{
     width:25rem;
 }
 
-fieldset {
-    margin: 0 auto;
-    padding: 0.4rem;
-    border: none;
-    text-align: center;
+input[type=button] {
+    background: linear-gradient(to bottom, white, lightgray);
+    border: 0.05rem solid gray;
+    border-radius: 5rem;
+    display:block;
+    font-size: 1.2rem;
+    height: 2.5rem;
+    margin: 0.6rem auto;
+    width: 12rem;
 }
+
+input[type=button]:enabled {
+    color: black;
+}
+
+input[type=text] {
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: inset 0rem 0.1rem 0.2rem 0rem gray;
+    color:black;
+    font-size: 1rem;
+    height: 2rem;
+    padding: 0 0 0 0.5rem;
+    vertical-align: middle;
+}
+
+input:invalid {
+    background: pink;
+}
+
 label {
     display: inline-block;
     font-size: 1.3rem;
     height: 1.3rem;
     line-height: 1.3rem;
-    width: 7rem;
     text-align: center;
     vertical-align: middle;
-    color: gray;
+    width: 7rem;
 }
+/******************************************************************************
+******************************************************************************/
 
-#timerContainer {
+
+
+
+/******************************************************************************
+*                                   Results                                   *
+******************************************************************************/
+.accuracyDisplay {
+    font-size: 1.6rem;
     text-align: center;
 }
 
-h2 {
-    font-size: 1.25rem;
-    font-weight: normal;
-    text-align: center;
-    color: gray;
-}
-
-#timer{
-    font-size: 3rem;
-    font-weight: normal;
-    font-family: Monospace;
-    color: gray;
+td.estimateDisplay::before {
+    content: "- ";
 }
 
 #resultDataContainer {
-    width: 20rem;
     margin: 0 auto;
+    width: 20rem;
 }
 
-.accuracyDisplay{
-    font-size: 1.6rem;
-    text-align: center;
+hr {
+    background: gray;
+    border: none;
+    height: 0.1rem;
+    margin: 0.2rem 0;
 }
 
 table {
     vertical-align: center;
 }
 
-hr{
-    margin: 0.2rem 0rem;
-}
-
-th{
-    width: 6rem;
-    padding: 0 1rem 0 0.5rem;
+td {
     font-size: 1rem;
     text-align: right;
-    color: gray;
 }
 
-td{
+td.differenceDisplay {
+    border-top: 0.05rem solid gray;
+}
+
+th {
+    font-size: 1rem;
+    padding: 0 1rem 0 0.5rem;
     text-align: right;
-    color: gray;
+    width: 6rem;
+}
+/******************************************************************************
+******************************************************************************/
+
+
+
+
+/******************************************************************************
+*                                    Timer                                    *
+******************************************************************************/
+#timer {
+    font-family: Monospace;
+    font-size: 3rem;
 }
 
-td.differenceDisplay{
-    border-top: 1px solid gray;
+#timerContainer {
+    text-align: center;
 }
-.estimateDisplay::before{
-    content: "- ";
-}
+/******************************************************************************
+******************************************************************************/
