@@ -6,7 +6,7 @@
     </head>
     <body>
         <section id="formContainer">
-            <form id="estimateForm">
+            <form class="fixedSizeContainer" id="estimateForm">
                 <fieldset>
                     <label>Activity</label>
                     <input type="text" name="activity" placeholder="Groceries">
@@ -20,15 +20,17 @@
                 <input type="button" id="startBt" value="Start" disabled=true>
             </form>
         </section>
-        <section id="timerContainer">
+        <section  id="timerContainer">
             <h2><span class="activityDisplay"></span> ~ <span class="estimateDisplay"></span></h2>
-            <span id="timer"></span>
-            <input type="button" id="finishBt" value="Finish" disabled=true>
+            <div class="fixedSizeContainer">
+                <span id="timer"></span>
+                <input type="button" id="finishBt" value="Finish" disabled=true>
+            </div>
         </section>
 
         <section id="resultContainer">
             <h2 class="activityDisplay"></h2>
-            <div id="resultDataContainer">
+            <div class="fixedSizeContainer">
                 <table>
                     <tr> <th>Accuracy</th> <td class="accuracyDisplay"></td> </tr>
                 </table>

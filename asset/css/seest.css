@@ -16,7 +16,10 @@ section {
     padding: 32px;
 }
 
-
+.fixedSizeContainer {
+    margin: 0 auto;
+    width: 25rem;
+}
 
 
 /******************************************************************************
@@ -27,11 +30,6 @@ fieldset {
     margin: 0 auto;
     padding: 0.4rem;
     text-align: center;
-}
-
-form{
-    margin: 0 auto;
-    width:25rem;
 }
 
 input[type=button] {
@@ -87,15 +85,6 @@ label {
     text-align: center;
 }
 
-td.estimateDisplay::before {
-    content: "- ";
-}
-
-#resultDataContainer {
-    margin: 0 auto;
-    width: 20rem;
-}
-
 hr {
     background: gray;
     border: none;
@@ -114,6 +103,10 @@ td {
 
 td.differenceDisplay {
     border-top: 0.05rem solid gray;
+}
+
+td.estimateDisplay::before {
+    content: "- ";
 }
 
 th {
