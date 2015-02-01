@@ -1,12 +1,19 @@
-
-// Set button states to override any cached states
 window.onload = function() {
-    var start = document.getElementById("startBt");
-    start.onclick = processEstimate;
-    start.disabled = false;
-    resetDisplay();
-    document.getElementById("finishBt").disabled = true;
-};
+    var params = parseGetParam(window.location.search);
+    if(document.getElementById("timer"))
+        startTimer();
+    if(document.getElementById("resultContainer"))
+        processResult();
+}
+
+function cleanObject(obj, exceptions) {
+    for( var property in obj) {
+        if( !obj.hasOwnProperty(property)) continue;
+
+        if( !(property in exceptions) )
+            delete obj[property];
+    }
+}
 
 // Formats Date's total time into a string with the form HH:MM:SS.
 // Hour section can span more than 2 digits and is negative if the
@@ -19,6 +26,13 @@ Date.prototype.toDuration = function() {
     var prefix = (this.getTime() < 0) ? "-" : "";
     function pad(i) { return ( (i < 10) ? "0" : "" ) + i; }
     return prefix.concat( pad(hour), ":", pad(min), ":", pad(sec) );
+}
+
+//decodeURIComponent may not decode spaces
+function decodeExtra(encodedStr) {
+    var decoded = encodedStr.replace(/\+/g, " ");
+    decoded = decodeURIComponent(decoded);
+    return decoded;
 }
 
 // Returns a data object set up as a relative time span.
@@ -36,6 +50,13 @@ function duration(hour, min, sec, ms, scale) {
     dur.setHours(        dur.getHours()        + toInt(hour) );
     dur.setTime( Math.round(dur.getTime() * localScale) );
     return dur;
+}
+
+function moveToResults() {
+    var currParams = parseGetParam(window.location.search);
+    cleanObject(currParams, {activity: "", estimate: "", start: ""});
+    currParams["finish"] = nowTrimMs().getTime();
+    window.location.href = "../result" + toSearchQuery(currParams);
 }
 
 // Returns str as a duration(date object) or null if not in the
@@ -68,41 +89,45 @@ function parseEstimate(str) {
     return duration(hour, min, sec);
 }
 
-function processEstimate() {
-    var currTime = nowTrimMs();
-    var estForm = document.getElementById("estimateForm");
-    var estimate = parseEstimate(estForm["estimate"].value);
-    var finish = document.getElementById("finishBt");
-    var timer = document.getElementById("timer");
-    var updater = function(){ updateTimer(timer, currTime); }
-    resetDisplay();
-    if( estimate != null ){
-        document.getElementById("startBt").disabled = true;
-        updater();
-        var updaterID = setInterval(updater, 250);
-        writeClassInner("activityDisplay", estForm["activity"].value);
-        writeClassInner("estimateDisplay", estimate.toDuration());
-        finish.onclick = function() { processResult( updaterID, currTime, estimate) };
-        finish.disabled = false;
+// Converts the key=value pairs in the query string into an object
+// Returns an empty object if query is ""
+// Skips key/value pairs that do not have exactly one = sign
+// If a key has multiple values it will be assigned the one that comes last
+function parseGetParam(query) {
+    var paramPairs = query.replace("?", "").split("&");
+    var params = {};
+    if( paramPairs == "" ) return params;
+
+    for( var i = 0; i < paramPairs.length; i++) {
+        if( ! /^[^=]*=[^=]*$/.test(paramPairs[i]) ) continue;
+        keyValue = paramPairs[i].split("=");
+        params[ decodeExtra(keyValue[0]) ] = decodeExtra(keyValue[1]);
     }
+    return params;
+}
+
+function presubmit() {
+    document.getElementById("estimateForm")["start"].value = nowTrimMs().getTime();
 }
 
 function processResult(updaterID, startTime, estimate) {
-    clearInterval(updaterID);
-    document.getElementById("finishBt").disabled = true;
+    var params = parseGetParam(window.location.search);
+    var startTime = new Date(parseInt(params["start"], 10));
+    var endTime = new Date(parseInt(params["finish"], 10));
+    var elapsed = duration(0, 0, 0, endTime - startTime);
+    var estimate = parseEstimate(params["estimate"]);
 
-    var elapsed = parseDuration(document.getElementById("timer").innerHTML);
-    var endTime = new Date(startTime.getTime() + elapsed.getTime());
     var diff = duration(0, 0, 0, (elapsed - estimate));
     var acc = (estimate < elapsed) ? estimate / elapsed : elapsed / estimate;
     acc = (acc * 100).toFixed(2) + "%";
 
+    writeClassInner("activityDisplay", params["activity"]);
     writeClassInner("accuracyDisplay", acc);
     writeClassInner("durationDisplay", elapsed.toDuration() );
+    writeClassInner("estimateDisplay", estimate.toDuration());
     writeClassInner("differenceDisplay", diff.toDuration() );
     writeClassInner("startDisplay", startTime.toLocaleString() );
     writeClassInner("endDisplay", endTime.toLocaleString() );
-   document.getElementById("startBt").disabled = false;
 }
 
 // Time/duration may be off by 1sec if ms is not removed.
@@ -112,14 +137,27 @@ function nowTrimMs() {
     return now;
 }
 
-function resetDisplay() {
-    writeClassInner("estimateDisplay", "" );
-    document.getElementById("timer").innerHTML = "";
-    writeClassInner("accuracyDisplay", "##");
-    writeClassInner("activityDisplay", "");
-    writeClassInner("differenceDisplay", "" );
-    writeClassInner("startDisplay", "" );
-    writeClassInner("endDisplay", "" );
+function startTimer() {
+    var params = parseGetParam(window.location.search);
+    var estimate = parseEstimate(params["estimate"]) || duration();
+    var start = new Date(parseInt(params["start"], 10));
+    var timer = document.getElementById("timer");
+    var updater = function(){ updateTimer(timer, start); }
+    updater();
+    setInterval(updater, 250);
+    writeClassInner("activityDisplay", params["activity"]);
+    writeClassInner("estimateDisplay", estimate.toDuration());
+    document.getElementById("finishBt").onclick = moveToResults;
+}
+
+function toSearchQuery(obj) {
+    var query = "?";
+    for(var key in obj) {
+        if(!obj.hasOwnProperty(key)) continue;
+        var keyValue = encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
+        query += keyValue + "&";
+    }
+   return query.slice(0, -1);
 }
 
 function updateTimer(element, startTime) {
@@ -133,3 +171,4 @@ function writeClassInner(className, text) {
     for( var i = 0; i < elements.length; i++ )
         elements[i].innerHTML = text;
 }
+

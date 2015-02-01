@@ -6,7 +6,7 @@
     </head>
     <body>
         <section id="formContainer">
-            <form class="fixedSizeContainer" id="estimateForm">
+            <form class="fixedSizeContainer" id="estimateForm" action="timer" method="get" onsubmit="presubmit()">
                 <fieldset>
                     <label>Activity</label>
                     <input type="text" name="activity" placeholder="Groceries">
@@ -17,35 +17,9 @@
                      pattern="(\d+[hH])?(\d+[mM])?(\d+[sS])?"
                      title="The hours minutes, and seconds of the estimate in the form #h#m#s">
                 </fieldset>
-                <input type="button" id="startBt" value="Start" disabled=true>
+                <input type="hidden" name="start">
+                <input type="submit" id="startBt" value="Start">
             </form>
-        </section>
-        <section  id="timerContainer">
-            <h2><span class="activityDisplay"></span> ~ <span class="estimateDisplay"></span></h2>
-            <div class="fixedSizeContainer">
-                <span id="timer"></span>
-                <input type="button" id="finishBt" value="Finish" disabled=true>
-            </div>
-        </section>
-
-        <section id="resultContainer">
-            <h2 class="activityDisplay"></h2>
-            <div class="fixedSizeContainer">
-                <table>
-                    <tr> <th>Accuracy</th> <td class="accuracyDisplay"></td> </tr>
-                </table>
-                <hr>
-                <table>
-                    <tr> <th>Duration</th>   <td class="durationDisplay"></td> </tr>
-                    <tr> <th>Estimate</th>   <td class="estimateDisplay"></td> </tr>
-                    <tr> <th>Difference</th> <td class="differenceDisplay"></td> </tr>
-                </table>
-                <hr>
-                <table>
-                    <tr> <th>Started</th> <td class="startDisplay"></td> </tr>
-                    <tr> <th>Ended</th>   <td class="endDisplay"></td> </tr>
-                </table>
-            </div>
         </section>
     </body>
 </html>

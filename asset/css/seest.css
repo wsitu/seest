@@ -32,7 +32,7 @@ fieldset {
     text-align: center;
 }
 
-input[type=button] {
+input[type=button], input[type=submit] {
     background: linear-gradient(to bottom, white, lightgray);
     border: 0.05rem solid gray;
     border-radius: 5rem;
@@ -43,7 +43,7 @@ input[type=button] {
     width: 12rem;
 }
 
-input[type=button]:enabled {
+input[type=button]:enabled, input[type=submit]:enabled{
     color: black;
 }
 
