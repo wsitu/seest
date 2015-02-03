@@ -2,6 +2,9 @@
 
     Seest.formInit = function() {
         var estForm = document.getElementById("estimateForm");
+        var params = parseGetParam(window.location.search);
+        estForm.activity.value = params["activity"];
+        estForm.estimate.value = params["estimate"];
         estForm.onsubmit = presubmit;
     }
 
@@ -36,6 +39,7 @@
         writeClassInner("differenceDisplay", toDurationStr(diff) );
         writeClassInner("startDisplay", startTime.toLocaleString() );
         writeClassInner("endDisplay", endTime.toLocaleString() );
+        document.getElementById("newBt").onclick = moveToForm;
     }
 
 
@@ -88,6 +92,12 @@
         dur.setHours(        dur.getHours()        + toInt(hour) );
         dur.setTime( Math.round(dur.getTime() * localScale) );
         return dur;
+    }
+
+    function moveToForm() {
+        var currParams = parseGetParam(window.location.search);
+        cleanObject(currParams, {activity: "", estimate: ""});
+        window.location.href = "../" + toSearchQuery(currParams);
     }
 
     function moveToResults() {
