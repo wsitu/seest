@@ -1,51 +1,93 @@
 ( function( Seest) {
 
+    // appended to hrefs this script is responsible for
+    var dirIndex = "";
+    //dirIndex = "/index.html"; // for non webserver systems
+
+    // html element id
+    var id = {
+        estForm: "estimateForm",
+        finishBt: "finishBt",
+        newBt: "newBt",
+        startBt: "startBt",
+        timer: "timer"
+    };
+
+    // html class names
+    var cl = {
+        accDs: "accuracyDisplay",
+        actDs: "activityDisplay",
+        diffDs: "differenceDisplay",
+        durDs: "durationDisplay",
+        estDs: "estimateDisplay",
+        finishDs: "endDisplay",
+        startDs: "startDisplay"
+    };
+
+    // url parameter key names
+    // act and est should match the estimate form's input names
+    var urlp = {
+        act: "activity",
+        est: "estimate",
+        finish: "finish",
+        start: "start"
+    };
+
+
+
+
     Seest.formInit = function() {
-        var estForm = document.getElementById("estimateForm");
+        var estimateForm = document.getElementById(id.estForm);
         var params = parseGetParam(window.location.search);
-        estForm.activity.value = params["activity"];
-        estForm.estimate.value = params["estimate"];
-        estForm.onsubmit = presubmit;
+        estimateForm[urlp.act].value = params[urlp.act];
+        estimateForm[urlp.est].value = params[urlp.est];
+        estimateForm.action = "timer" + dirIndex;
+        estimateForm.onsubmit = presubmit;
     }
 
     Seest.timerInit = function() {
         var params = parseGetParam(window.location.search);
-        var estimate = parseEstimate(params["estimate"]) || duration();
-        var start = new Date(parseInt(params["start"], 10));
-        var timer = document.getElementById("timer");
+        var estimate = parseEstimate(params[urlp.est]) || duration();
+        var start = new Date(parseInt(params[urlp.start], 10));
+        var timer = document.getElementById(id.timer);
         var updater = function(){ updateTimer(timer, start); }
         updater();
         setInterval(updater, 250);
-        writeClassInner("activityDisplay", params["activity"]);
-        writeClassInner("estimateDisplay", toDurationStr(estimate));
-        document.getElementById("finishBt").onclick = moveToResults;
+        writeClassInner(cl.actDs, params[urlp.act]);
+        writeClassInner(cl.estDs, toDurationStr(estimate));
+        document.getElementById(id.finishBt).onclick = moveToResults;
     }
 
     Seest.resultInit = function(updaterID, startTime, estimate) {
         var params = parseGetParam(window.location.search);
-        var startTime = new Date(parseInt(params["start"], 10));
-        var endTime = new Date(parseInt(params["finish"], 10));
+        var startTime = new Date(parseInt(params[urlp.start], 10));
+        var endTime = new Date(parseInt(params[urlp.finish], 10));
         var elapsed = duration(0, 0, 0, endTime - startTime);
-        var estimate = parseEstimate(params["estimate"]);
+        var estimate = parseEstimate(params[urlp.est]);
 
         var diff = duration(0, 0, 0, (elapsed - estimate));
         var acc = (estimate < elapsed) ? estimate / elapsed : elapsed / estimate;
         acc = (acc * 100).toFixed(2) + "%";
 
-        writeClassInner("activityDisplay", params["activity"]);
-        writeClassInner("accuracyDisplay", acc);
-        writeClassInner("durationDisplay", toDurationStr(elapsed) );
-        writeClassInner("estimateDisplay", toDurationStr(estimate) );
-        writeClassInner("differenceDisplay", toDurationStr(diff) );
-        writeClassInner("startDisplay", startTime.toLocaleString() );
-        writeClassInner("endDisplay", endTime.toLocaleString() );
-        document.getElementById("newBt").onclick = moveToForm;
+        writeClassInner(cl.actDs, params[urlp.act]);
+        writeClassInner(cl.accDs, acc);
+        writeClassInner(cl.durDs, toDurationStr(elapsed) );
+        writeClassInner(cl.estDs, toDurationStr(estimate) );
+        writeClassInner(cl.diffDs, toDurationStr(diff) );
+        writeClassInner(cl.startDs, startTime.toLocaleString() );
+        writeClassInner(cl.finishDs, endTime.toLocaleString() );
+        document.getElementById(id.newBt).onclick = moveToForm;
     }
 
 
 
 
-    function cleanObject(obj, exceptions) {
+    // Deletes all properties of obj except for any property names passed in
+    function cleanObject(obj) {
+        var exceptions = {};
+        for( var i = 1; i < arguments.length; i++)
+            exceptions[arguments[i]] = "";
+
         for( var property in obj) {
             if( !obj.hasOwnProperty(property)) continue;
 
@@ -96,15 +138,15 @@
 
     function moveToForm() {
         var currParams = parseGetParam(window.location.search);
-        cleanObject(currParams, {activity: "", estimate: ""});
-        window.location.href = "../" + toSearchQuery(currParams);
+        cleanObject(currParams, urlp.act, urlp.est);
+        window.location.href = ".." + dirIndex + toSearchQuery(currParams);
     }
 
     function moveToResults() {
         var currParams = parseGetParam(window.location.search);
-        cleanObject(currParams, {activity: "", estimate: "", start: ""});
-        currParams["finish"] = nowTrimMs().getTime();
-        window.location.href = "../result" + toSearchQuery(currParams);
+        cleanObject(currParams, urlp.act, urlp.est, urlp.start);
+        currParams[urlp.finish] = nowTrimMs().getTime();
+        window.location.href = "../result"+ dirIndex + toSearchQuery(currParams);
     }
 
     // Returns str as a duration(date object) or null if not in the
@@ -155,7 +197,7 @@
     }
 
     function presubmit() {
-        document.getElementById("estimateForm")["start"].value = nowTrimMs().getTime();
+        document.getElementById(id.estForm)[urlp.start].value = nowTrimMs().getTime();
     }
 
     // Time/duration may be off by 1sec if ms is not removed.
