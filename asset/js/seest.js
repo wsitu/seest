@@ -2,7 +2,7 @@
 
     // appended to hrefs this script is responsible for
     var dirIndex = "";
-    //dirIndex = "/index.html"; // for non webserver systems
+    dirIndex = "/index.html"; // for non webserver systems
 
     // html element id
     var id = {
@@ -39,8 +39,8 @@
     Seest.formInit = function() {
         var estimateForm = document.getElementById(id.estForm);
         var params = parseGetParam(window.location.search);
-        estimateForm[urlp.act].value = params[urlp.act];
-        estimateForm[urlp.est].value = params[urlp.est];
+        estimateForm[urlp.act].value = params[urlp.act] || "";
+        estimateForm[urlp.est].value = params[urlp.est] || "";
         estimateForm.action = "timer" + dirIndex;
         estimateForm.onsubmit = presubmit;
     }
@@ -53,7 +53,7 @@
         var updater = function(){ updateTimer(timer, start); }
         updater();
         setInterval(updater, 250);
-        writeClassInner(cl.actDs, params[urlp.act]);
+        writeClassInner(cl.actDs, params[urlp.act] || "Estimate");
         writeClassInner(cl.estDs, toDurationStr(estimate));
         document.getElementById(id.finishBt).onclick = moveToResults;
     }
