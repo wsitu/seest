@@ -25,12 +25,12 @@
     };
 
     // url parameter key names
-    // act and est should match the estimate form's input names
+    // act and est and start should match the estimate form's input names
     var urlp = {
-        act: "activity",
-        est: "estimate",
-        finish: "finish",
-        start: "start"
+        act: "a",
+        est: "e",
+        finish: "f",
+        start: "s"
     };
 
 
@@ -48,7 +48,7 @@
     Seest.timerInit = function() {
         var params = parseGetParam(window.location.search);
         var estimate = parseEstimate(params[urlp.est]) || duration();
-        var start = new Date(parseInt(params[urlp.start], 10));
+        var start = new Date( parseInt(params[urlp.start], 10) * 1000 );
         var timer = document.getElementById(id.timer);
         var updater = function(){ updateTimer(timer, start); }
         updater();
@@ -60,8 +60,8 @@
 
     Seest.resultInit = function(updaterID, startTime, estimate) {
         var params = parseGetParam(window.location.search);
-        var startTime = new Date(parseInt(params[urlp.start], 10));
-        var endTime = new Date(parseInt(params[urlp.finish], 10));
+        var startTime = new Date( parseInt(params[urlp.start], 10) * 1000 );
+        var endTime = new Date( parseInt(params[urlp.finish], 10) * 1000);
         var elapsed = duration(0, 0, 0, endTime - startTime);
         var estimate = parseEstimate(params[urlp.est]);
 
@@ -145,7 +145,7 @@
     function moveToResults() {
         var currParams = parseGetParam(window.location.search);
         cleanObject(currParams, urlp.act, urlp.est, urlp.start);
-        currParams[urlp.finish] = nowTrimMs().getTime();
+        currParams[urlp.finish] = nowTrimMs().getTime() / 1000;
         window.location.href = "../result"+ dirIndex + toSearchQuery(currParams);
     }
 
@@ -197,7 +197,9 @@
     }
 
     function presubmit() {
-        document.getElementById(id.estForm)[urlp.start].value = nowTrimMs().getTime();
+        var nowSec = nowTrimMs().getTime() / 1000;
+        document.getElementById(id.estForm)[urlp.start].value = nowSec;
+
     }
 
     // Time/duration may be off by 1sec if ms is not removed.
