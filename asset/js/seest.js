@@ -2,7 +2,7 @@
 
     // appended to hrefs this script is responsible for
     var dirIndex = "";
-    dirIndex = "/index.html"; // for non webserver systems
+    //dirIndex = "/index.html"; // for non webserver systems
 
     // html element id
     var id = {
@@ -25,7 +25,7 @@
     };
 
     // url parameter key names
-    // act and est and start should match the estimate form's input names
+    // act, est, and start should match the estimate form's input names
     var urlp = {
         act: "a",
         est: "e",
@@ -41,6 +41,7 @@
         var params = parseGetParam(window.location.search);
         estimateForm[urlp.act].value = params[urlp.act] || "";
         estimateForm[urlp.est].value = params[urlp.est] || "";
+        estimateForm[urlp.act].select();
         estimateForm.action = "timer" + dirIndex;
         estimateForm.onsubmit = presubmit;
     }
