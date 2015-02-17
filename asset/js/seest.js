@@ -54,7 +54,7 @@
         var updater = function(){ updateTimer(timer, start); }
         updater();
         setInterval(updater, 250);
-        writeClassInner(cl.actDs, params[urlp.act] || "Estimate");
+        writeClassInner(cl.actDs, params[urlp.act]);
         writeClassInner(cl.estDs, toDurationStr(estimate));
         document.getElementById(id.finishBt).onclick = moveToResults;
     }
@@ -65,9 +65,11 @@
         var endTime = new Date( parseInt(params[urlp.finish], 10) * 1000);
         var elapsed = duration(0, 0, 0, endTime - startTime);
         var estimate = parseEstimate(params[urlp.est]);
-
         var diff = duration(0, 0, 0, (estimate - elapsed));
-        var err = ( diff / elapsed.getTime() * 100 ).toFixed(2) + "%";
+        var err = "&infin;%";
+
+        if (elapsed.getTime() > 0)
+            err = ( diff / elapsed.getTime() * 100 ).toFixed(2) + "%";
 
         writeClassInner(cl.actDs, params[urlp.act]);
         writeClassInner(cl.errDs, err);
