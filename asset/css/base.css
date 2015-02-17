@@ -1,13 +1,17 @@
 /* Generic base stylesheet for site */
 
 * {
-    color: gray;
+    color: #333333;
+    background: #eeeeee;
+}
+
+a {
+    color: dodgerblue;
 }
 
 body {
     padding: 32px;
 }
-
 
 /* subtitle or subheading */
 h2 br + span {
@@ -18,16 +22,8 @@ nav li {
     display: inline-block;
 }
 
-nav li:hover {
-    background: white;
-}
-
 nav li a {
     text-decoration: none;
-}
-
-nav li a:hover {
-    color: black;
 }
 
 nav ul {

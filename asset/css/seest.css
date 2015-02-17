@@ -26,7 +26,7 @@ h2 {
 *                                    Form                                     *
 ******************************************************************************/
 fieldset {
-    border: none;
+    border-style: none;
     margin: 0 auto;
     padding: 0.4rem;
     text-align: center;
@@ -34,7 +34,7 @@ fieldset {
 
 input[type=button], input[type=submit] {
     background: linear-gradient(to bottom, white, lightgray);
-    border: 0.05rem solid gray;
+    border: 0.05rem solid #333333;
     border-radius: 5rem;
     display:block;
     font-size: 1.2rem;
@@ -48,7 +48,8 @@ input[type=button]:enabled, input[type=submit]:enabled{
 }
 
 input[type=text] {
-    border: none;
+    background: white;
+    border-style: none;
     border-radius: 0.25rem;
     box-shadow: inset 0rem 0.1rem 0.2rem 0rem gray;
     color:black;
@@ -87,7 +88,7 @@ label {
 
 hr {
     background: gray;
-    border: none;
+    border-style: none;
     height: 0.1rem;
     margin: 0.2rem 0;
 }
@@ -101,7 +102,7 @@ td {
 }
 
 td.differenceDisplay {
-    border-top: 0.05rem solid gray;
+    border-top: 0.05rem solid #333333;
 }
 
 td.durationDisplay::before {
