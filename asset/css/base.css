@@ -1,0 +1,47 @@
+/* Generic base stylesheet for site */
+
+* {
+    color: gray;
+}
+
+body {
+    padding: 32px;
+}
+
+
+/* subtitle or subheading */
+h2 br + span {
+    font-weight: normal;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li:hover {
+    background: white;
+}
+
+nav li a {
+    text-decoration: none;
+}
+
+nav li a:hover {
+    color: black;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+td {
+    font-size: 1rem;
+    text-align: left;
+}
+
+th {
+    font-size: 1rem;
+    padding: 0 1rem;
+    text-align: left;
+}

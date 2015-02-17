@@ -1,18 +1,14 @@
+@import "base.css";
 /* Stylesheet for the seest pages */
 
 * {
-    color: gray;
     margin: 0;
     padding: 0;
 }
 
-/* activityDisplay not on block element for timer */
+/* activityDisplay not a block element for timer */
 .activityDisplay, #timerContainer h2 {
     text-align: center;
-}
-
-body {
-    padding: 32px;
 }
 
 .fixedSizeContainer {
@@ -21,34 +17,10 @@ body {
 }
 
 h2 {
-    font-size: 1.25rem;
+    font-size 1.25rem;
     font-weight: bold;
 }
 
-/* subtitle or subheading */
-h2 br + span {
-    font-weight: normal;
-}
-
-nav {
-    margin-bottom: 1rem;
-}
-
-nav li {
-    display: inline-block;
-}
-
-nav li:hover {
-    background: white;
-}
-
-nav li a {
-    text-decoration: none;
-}
-
-nav li a:hover {
-    color: black;
-}
 
 /******************************************************************************
 *                                    Form                                     *
@@ -125,7 +97,6 @@ table {
 }
 
 td {
-    font-size: 1rem;
     text-align: right;
 }
 
@@ -138,7 +109,6 @@ td.estimateDisplay::before {
 }
 
 th {
-    font-size: 1rem;
     padding: 0 1rem 0 0.5rem;
     text-align: right;
     width: 6rem;
