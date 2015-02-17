@@ -53,14 +53,28 @@
 
             <h3>Results</h3>
             <p>
-            The results page is a summary of your session. In particular you will want to pay atten
-            tion to the accuracy and difference so you can make adjustments for future estimates.
+            The results page is a summary of your session. In particular you will want to pay
+            attention to the error and difference so you can make adjustments for future estimates.
             </p>
             <table>
-                <tr> <th>Accuracy</th> <td>How close your estimate and duration is</td> </tr>
+                <tr>
+                    <th>Error</th>
+                    <td>
+                        The percentage your estimate is off by relative to the duration
+                        <br>
+                        (estimate - duration) &divide; duration &times; 100
+                    </td>
+                </tr>
                 <tr> <th>Duration</th> <td>Amount of time the activity took</td> </tr>
                 <tr> <th>Estimate</th> <td>Amount of time estimated for the activity </td> </tr>
-                <tr> <th>Difference</th> <td>Amount of time the estimate is off by</td> </tr>
+                <tr>
+                    <th>Difference</th>
+                    <td>
+                        Amount of time to adjust the estimate by
+                        <br>
+                        duration &minus; estimate
+                    </td>
+                </tr>
                 <tr> <th>Started</th> <td>When the timer started</td> </tr>
                 <tr> <th>Ended</th> <td>When the timer ended</td> </tr>
             </table>

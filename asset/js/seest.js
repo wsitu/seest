@@ -15,10 +15,10 @@
 
     // html class names
     var cl = {
-        accDs: "accuracyDisplay",
         actDs: "activityDisplay",
         diffDs: "differenceDisplay",
         durDs: "durationDisplay",
+        errDs: "errorDisplay",
         estDs: "estimateDisplay",
         finishDs: "endDisplay",
         startDs: "startDisplay"
@@ -67,11 +67,12 @@
         var estimate = parseEstimate(params[urlp.est]);
 
         var diff = duration(0, 0, 0, (elapsed - estimate));
-        var acc = (estimate < elapsed) ? estimate / elapsed : elapsed / estimate;
-        acc = (acc * 100).toFixed(2) + "%";
+        var err = (estimate - elapsed) / elapsed.getTime()
+        //var err = (estimate < elapsed) ? estimate / elapsed : elapsed / estimate;
+        err = (err * 100).toFixed(2) + "%";
 
         writeClassInner(cl.actDs, params[urlp.act]);
-        writeClassInner(cl.accDs, acc);
+        writeClassInner(cl.errDs, err);
         writeClassInner(cl.durDs, toDurationStr(elapsed) );
         writeClassInner(cl.estDs, toDurationStr(estimate) );
         writeClassInner(cl.diffDs, toDurationStr(diff) );
