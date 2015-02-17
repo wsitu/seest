@@ -13,6 +13,18 @@ body {
     padding: 32px;
 }
 
+dl {
+    margin-left: 2rem;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin-bottom: 0.5rem;
+}
+
 /* subtitle or subheading */
 h2 br + span {
     font-weight: normal;
@@ -41,3 +53,4 @@ th {
     padding: 0 1rem;
     text-align: left;
 }
+
