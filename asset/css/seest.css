@@ -3,7 +3,12 @@
 * {
     color: gray;
     margin: 0;
-    padding 0;
+    padding: 0;
+}
+
+/* activityDisplay not on block element for timer */
+.activityDisplay, #timerContainer h2 {
+    text-align: center;
 }
 
 body {
@@ -18,12 +23,31 @@ body {
 h2 {
     font-size: 1.25rem;
     font-weight: bold;
-    text-align: center;
 }
 
+/* subtitle or subheading */
 h2 br + span {
-    /*font-size: 1rem;*/
     font-weight: normal;
+}
+
+nav {
+    margin-bottom: 1rem;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li:hover {
+    background: white;
+}
+
+nav li a {
+    text-decoration: none;
+}
+
+nav li a:hover {
+    color: black;
 }
 
 /******************************************************************************
