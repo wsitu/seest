@@ -66,10 +66,8 @@
         var elapsed = duration(0, 0, 0, endTime - startTime);
         var estimate = parseEstimate(params[urlp.est]);
 
-        var diff = duration(0, 0, 0, (elapsed - estimate));
-        var err = (estimate - elapsed) / elapsed.getTime()
-        //var err = (estimate < elapsed) ? estimate / elapsed : elapsed / estimate;
-        err = (err * 100).toFixed(2) + "%";
+        var diff = duration(0, 0, 0, (estimate - elapsed));
+        var err = ( diff / elapsed.getTime() * 100 ).toFixed(2) + "%";
 
         writeClassInner(cl.actDs, params[urlp.act]);
         writeClassInner(cl.errDs, err);

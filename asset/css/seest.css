@@ -104,7 +104,7 @@ td.differenceDisplay {
     border-top: 0.05rem solid gray;
 }
 
-td.estimateDisplay::before {
+td.durationDisplay::before {
     content: "- ";
 }
 
