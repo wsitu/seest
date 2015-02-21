@@ -11,23 +11,21 @@
                 <li><a href="about">About</a></li>
             </ul>
         </nav>
-        <section>
-            <form class="fixedSizeContainer" id="estimateForm" action="" method="get">
-                <fieldset>
-                    <label>Activity</label>
-                    <input type="text" name="a" placeholder="Groceries" autofocus=true>
-                </fieldset>
-                <fieldset>
-                    <label>Estimate</label>
-                    <input type="text" name="e" placeholder="1h15m40s"
-                     pattern="(\d+[hH])?(\d+[mM])?(\d+[sS])?"
-                     title="The hours minutes, and seconds of the estimate in the form #h#m#s">
-                </fieldset>
-                <input type="hidden" name="s">
-                <input type="submit" id="startBt" value="Start">
-            </form>
-        </section>
-        <script type="text/javascript" src="asset/js/seest.js"></script>
+        <form class="fixedSizeContainer" id="estimateForm" method="get">
+            <fieldset>
+                <label>Activity</label>
+                <input type="text" name="a" placeholder="Groceries">
+            </fieldset>
+            <fieldset>
+                <label>Estimate</label>
+                <input type="text" name="e" placeholder="1h15m40s"
+                 pattern="(\d+[hH])?(\d+[mM])?(\d+[sS])?"
+                 title="The hours minutes, and seconds of the estimate in the form #h#m#s">
+            </fieldset>
+            <input type="hidden" name="s">
+            <input type="submit" id="startBt" value="Start">
+        </form>
+        <script src="asset/js/seest.js"></script>
         <script>Seest.formInit()</script>
     </body>
 </html>
