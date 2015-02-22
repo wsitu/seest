@@ -88,8 +88,8 @@ label {
 
 hr {
     background: gray;
-    border: 1px solid gray;
-    height: 0.1rem;
+    border: 0.1rem solid gray;
+    height: 0;
     margin: 0.4rem 0;
 }
 
@@ -99,7 +99,6 @@ table {
 }
 
 td {
-    padding: inherit;
     text-align: right;
 }
 
@@ -112,16 +111,11 @@ td.durationDisplay::before {
 }
 
 th {
-    padding: inherit;
-    padding-right: 1rem;
+    padding: 0.2rem 1rem 0.2rem 0;
     text-align: right;
     width: 6rem;
 }
 
-tr {
-    padding-bottom: 0.2rem;
-    padding-top: 0.2rem;
-}
 /******************************************************************************
 ******************************************************************************/
 
