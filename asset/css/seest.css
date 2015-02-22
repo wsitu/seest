@@ -34,7 +34,7 @@ fieldset {
 
 input[type=button], input[type=submit] {
     background: linear-gradient(to bottom, white, silver);
-    border: 0.05rem solid #333333;
+    border: 0.1rem solid #333333;
     border-radius: 5rem;
     display:block;
     font-size: 1.2rem;
