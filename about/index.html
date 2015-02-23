@@ -48,19 +48,22 @@
             <h3>Timer</h3>
             <p>
             The timer page lists your activity and your estimate, along with a timer of how long it
-            has been since you started. When you're done with your task, press the “Finish” button
-            to see the results.
+            has been since you started. The timer and estimate are read as Hours:Minutes:Seconds.
+            When you're done with your task, press the “Finish” button to see the results.
             </p>
 
             <h3>Results</h3>
             <p>
             The results page is a summary of your session. In particular you will want to pay
             attention to the error and difference so you can make adjustments for future estimates.
+            The estimate and duration are read as Hours:Minutes:Seconds.
             </p>
             <dl>
                 <dt>Error</dt>
                 <dd>
-                    The percentage your estimate is off by relative to the duration
+                    The percentage the estimate is off by, relative to the duration.
+                    <br>
+                    The estimate is more/less than ###% of the actual time.
                     <br>
                     <var>Error</var> = (<var>estimate</var> - <var>duration</var>) &divide;
                     <var>duration</var> &times; 100
@@ -69,7 +72,9 @@
                 <dt>Duration</dt> <dd>Amount of time the activity took</dd>
                 <dt>Difference</dt>
                 <dd>
-                    Amount of time the estimate is ahead by
+                    Amount of time the estimate is off by.
+                    <br>
+                    The estimate is more/less than the actual time by ##:##:##.
                     <br>
                     <var>Difference</var> = <var>estimate</var> &minus; <var>duration</var>
                 </dd>
