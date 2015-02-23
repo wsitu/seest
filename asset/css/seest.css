@@ -107,7 +107,7 @@ td.differenceDisplay {
 }
 
 td.durationDisplay::before {
-    content: "- ";
+    content: "\2212  "; /* minus sign */
 }
 
 th {
