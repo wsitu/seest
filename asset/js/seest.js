@@ -2,7 +2,7 @@
 
     // appended to hrefs this script is responsible for
     var dirIndex = "";
-    dirIndex = "/index.html"; // for non webserver systems
+    //dirIndex = "/index.html"; // for non webserver systems
 
     // html element id
     var id = {
