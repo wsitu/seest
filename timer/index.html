@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>seest - Self Estimate Timer</title>
+        <link rel="stylesheet" type="text/css" href="../asset/css/seest.css">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="../about">About</a></li>
+            </ul>
+        </nav>
+        <section id="timerContainer">
+            <h2><span class="activityDisplay"></span><br>
+                <span>Estimate: <span class="estimateDisplay"></span></span>
+            </h2>
+            <div class="fixedSizeContainer">
+                <div id="timer"></div>
+                <input type="button" id="finishBt" value="Finish">
+            </div>
+        </section>
+        <script src="../asset/js/seest.js"></script>
+        <script> Seest.timerInit(); </script>
+    </body>
+</html>
+

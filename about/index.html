@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>seest - Self Estimate Timer</title>
+        <link rel="stylesheet" type="text/css" href="../asset/css/base.css">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="..">seest</a></li>
+            </ul>
+        </nav>
+
+        <section>
+            <h2>Where am I?</h2>
+            <p>
+            Welcome to seest, a tool for practicing your estimates on the time needed to finish an
+            activity. It provides input for an estimate, a timer to measure the actual time taken,
+            and the comparison between the two.
+            </p>
+        </section>
+
+        <section>
+            <h2>Why bother?</h2>
+            <p>
+            Because your time is a limited resource and schedules can increase efficiency. A common
+            mistake, however, is to make a schedule based on what you want to do and not what you
+            can do. If your body needs 10 minutes to jog 1 mile, no amount of time management is
+            going to let you finish 1 mile in 1 minute. To figure out reasonable time slots, you
+            will need to accurately estimate how long it takes to do things.
+            </p>
+        </section>
+
+        <section>
+            <h2>How do I Use this?</h2>
+
+            <h3>Form</h3>
+            <p>
+            The form contains an activity and estimate field. The activity is an optional reminder
+            for what you are estimating. The estimate is your guess at how long it will take to
+            finish the activity. It follows a special format #h#m#s where #h is the hours, #m is
+            the minutes, #s is the seconds, and # is a non-negative whole number. You can leave out
+            a unit (e.g. 1h30m) and you can go over 60 seconds or minutes (e.g. 90m).  Once you're
+            ready press the “Start” button to begin the timer.
+            </p>
+
+            <h3>Timer</h3>
+            <p>
+            The timer page lists your activity and estimate, along with a timer of how long it has
+            been since you started. The timer and estimate are read as Hours:Minutes:Seconds. When
+            you're done with your task, press the “Finish” button to see the results.
+            </p>
+
+            <h3>Results</h3>
+            <p>
+            The results page is a summary of your session. In particular you will want to pay
+            attention to the error and difference so you can make adjustments for future estimates.
+            The estimate, duration, and difference are read as Hours:Minutes:Seconds.
+            </p>
+            <dl>
+                <dt>Error</dt>
+                <dd>
+                    The percentage the estimate is off by, relative to the duration.
+                    <br>
+                    The estimate is more/less than ###% of the actual time.
+                    <br>
+                    <var>Error</var> = (<var>estimate</var> - <var>duration</var>) &divide;
+                    <var>duration</var> &times; 100
+                </dd>
+                <dt>Estimate</dt> <dd>Amount of time estimated for the activity </dd>
+                <dt>Duration</dt> <dd>Amount of time the activity took</dd>
+                <dt>Difference</dt>
+                <dd>
+                    Amount of time the estimate is off by.
+                    <br>
+                    The estimate is more/less than the actual time by ##:##:##.
+                    <br>
+                    <var>Difference</var> = <var>estimate</var> &minus; <var>duration</var>
+                </dd>
+                <dt>Started</dt> <dd>When the timer started</dd>
+                <dt>Ended</dt> <dd>When the timer ended</dd>
+            </dl>
+            <p>
+            In case you are repeating activities, the “New” button will send you back to the form
+            with the same values already filled in.
+            </p>
+
+            <h3>Notes</h3>
+            <p>
+            Except for the form page, your session information is saved as part of the URL so you
+            can send it or sync it with your other devices. You can also bookmark pages if you want
+            to revisit them later or you want to close the browser. If you are confident you will
+            not clear your history, you can just simply close it and open it back from history
+            instead.
+            </p>
+            <p>
+            If you wish to have a link to the form with its fields automatically filled in, first
+            fill in the form, start the timer, immediately end the timer, and use the “New” button
+            from the results page. The URL of the current form page will have the values you
+            entered from the beginning.
+            </p>
+            <p>
+            seest uses the clock of the current device to record times and update the timer. For it
+            to be accurate, the time offset on devices used must be the same. That is, if you
+            started the timer on a device with its time set 10 minutes ahead, then the timer will
+            only be correct if used on other devices that are also set 10 minutes ahead. This does
+            not apply to time zones and it can be used freely between different ones. However, the
+            result page will always display the start and end times according to the timezone of
+            the current device.
+            </p>
+        </section>
+
+        <section>
+            <h2>What browsers?</h2>
+            <p>
+            seest will generally work in browsers that support HTML5, CSS3, and JavaScript. Since
+            this is a small hobby project, it will only be guaranteed to work in a limited amount
+            of browsers and only their latest stable version. Currently they are: Chrome, Firefox,
+            and Opera. Accommodations may be made for other browsers but user experience and
+            functionality is only ensured for those mentioned earlier.
+            </p>
+        </section>
+
+        <section>
+            <h2>Any tips?</h2>
+
+            <h3>Plan your activity</h3>
+            <p>
+            Be specific about what you are doing and what your goals are. The process of defining
+            the activity in greater detail encourages further visualization of the situation, which
+            will help you identify any aspects that may have been overlooked. In addition, it will
+            be painfully obvious when you have been distracted and start working off tangent.
+            </p>
+
+            <h3>Know what you want</h3>
+            <p>
+            Have concrete conditions for being done. For some activities this may be trivial but
+            for others, where there is no finished state, more work can always go in because it can
+            always be made better. Without knowing beforehand what you want, it will be hard to
+            predict when you will want to stop.
+            </p>
+
+            <h3>Don't get distracted</h3>
+            <p>
+            The timer does not have a pause button for a reason. If you get distracted or
+            interrupted, nothing changes the fact that you are not done with what you planned to
+            do. However, it is understandable if something urgent comes up and stops you from
+            being able to continue. It is up to you to decide if such interruptions are normal and
+            whether they should be considered in future plans.
+            </p>
+        </section>
+    </body>
+</html>
+

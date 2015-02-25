@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>seest - Self Estimate Timer</title>
+        <link rel="stylesheet" type="text/css" href="../asset/css/seest.css">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="../about">About</a></li>
+            </ul>
+        </nav>
+        <section>
+            <h2 class="activityDisplay"></h2>
+            <div class="fixedSizeContainer">
+                <table>
+                    <tr> <th>Error</th> <td class="errorDisplay"></td> </tr>
+                </table>
+                <hr>
+                <table>
+                    <tr> <th>Estimate</th>   <td class="estimateDisplay"></td> </tr>
+                    <tr> <th>Duration</th>   <td class="durationDisplay"></td> </tr>
+                    <tr> <th>Difference</th> <td class="differenceDisplay"></td> </tr>
+                </table>
+                <hr>
+                <table>
+                    <tr> <th>Started</th> <td class="startDisplay"></td> </tr>
+                    <tr> <th>Ended</th>   <td class="endDisplay"></td> </tr>
+                </table>
+                <input type="button" id="newBt" value="New">
+            </div>
+        </section>
+        <script src="../asset/js/seest.js"></script>
+        <script> Seest.resultInit(); </script>
+    </body>
+</html>
+

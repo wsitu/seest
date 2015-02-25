@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>seest - Self Estimate Timer</title>
+        <link rel="stylesheet" type="text/css" href="asset/css/seest.css">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="about">About</a></li>
+            </ul>
+        </nav>
+        <form class="fixedSizeContainer" id="estimateForm" method="get">
+            <fieldset>
+                <label>Activity</label>
+                <input type="text" name="a" placeholder="Groceries">
+            </fieldset>
+            <fieldset>
+                <label>Estimate</label>
+                <input type="text" name="e" placeholder="1h15m40s"
+                 pattern="(\d+[hH])?(\d+[mM])?(\d+[sS])?"
+                 title="The hours minutes, and seconds of the estimate in the form #h#m#s">
+            </fieldset>
+            <input type="hidden" name="s">
+            <input type="submit" id="startBt" value="Start">
+        </form>
+        <script src="asset/js/seest.js"></script>
+        <script>Seest.formInit()</script>
+    </body>
+</html>
+

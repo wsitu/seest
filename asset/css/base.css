@@ -1,0 +1,45 @@
+/* Generic base stylesheet for site */
+
+* {
+    color: #333333;
+    background: #eeeeee;
+}
+
+a {
+    color: dodgerblue;
+}
+
+body {
+    padding: 32px;
+}
+
+dl {
+    margin-left: 2rem;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin-bottom: 0.5rem;
+}
+
+/* subtitle or subheading */
+h2 br + span {
+    font-weight: normal;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li a {
+    text-decoration: none;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
