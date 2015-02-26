@@ -46,6 +46,7 @@
         estimateForm[urlp.act].select();
         estimateForm.action = "timer" + dirIndex;
         estimateForm.onsubmit = presubmit;
+        document.getElementById(id.startBt).type = "submit";
     }
 
     Seest.timerInit = function() {
