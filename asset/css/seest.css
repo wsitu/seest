@@ -16,6 +16,12 @@
     width: 25rem;
 }
 
+.noScript {
+    border: 0.2rem solid firebrick;
+    margin: 1.5rem 0;
+    padding: 0.5rem;
+}
+
 h2 {
     font-size: 1.25rem;
     font-weight: bold;
