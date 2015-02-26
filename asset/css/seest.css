@@ -59,6 +59,10 @@ input[type=text] {
     vertical-align: middle;
 }
 
+input[type=text]:-ms-input-placeholder {
+    color: gray;
+}
+
 input:invalid {
     background: pink;
 }
