@@ -113,7 +113,7 @@ td {
 }
 
 td.differenceDisplay {
-    border-top: 0.05rem solid #333333;
+    border-top: 0.1rem solid #333333;
 }
 
 td.durationDisplay::before {
