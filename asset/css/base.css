@@ -5,6 +5,10 @@
     background: #eeeeee;
 }
 
+:-ms-input-placeholder {
+    color:gray;
+}
+
 a {
     color: dodgerblue;
 }

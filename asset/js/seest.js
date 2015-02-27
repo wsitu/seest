@@ -21,6 +21,7 @@
         errDs: "errorDisplay",
         estDs: "estimateDisplay",
         finishDs: "endDisplay",
+        noJs: "noScript",
         startDs: "startDisplay"
     };
 
@@ -39,11 +40,13 @@
     Seest.formInit = function() {
         var estimateForm = document.getElementById(id.estForm);
         var params = parseGetParam(window.location.search);
+        hideNoJs();
         estimateForm[urlp.act].value = params[urlp.act] || "";
         estimateForm[urlp.est].value = params[urlp.est] || "";
         estimateForm[urlp.act].select();
         estimateForm.action = "timer" + dirIndex;
         estimateForm.onsubmit = presubmit;
+        document.getElementById(id.startBt).type = "submit";
     }
 
     Seest.timerInit = function() {
@@ -52,6 +55,7 @@
         var start = new Date( parseInt(params[urlp.start], 10) * 1000 );
         var timer = document.getElementById(id.timer);
         var updater = function(){ updateTimer(timer, start); }
+        hideNoJs();
         updater();
         setInterval(updater, 250);
         writeClassInner(cl.actDs, params[urlp.act]);
@@ -67,6 +71,7 @@
         var estimate = parseEstimate(params[urlp.est]);
         var diff = duration(0, 0, 0, (estimate - elapsed));
         var err = "&infin;%";
+        hideNoJs();
 
         if (elapsed.getTime() > 0)
             err = ( diff / elapsed.getTime() * 100 ).toFixed(2) + "%";
@@ -136,6 +141,13 @@
         dur.setHours(        dur.getHours()        + toInt(hour) );
         dur.setTime( Math.round(dur.getTime() * localScale) );
         return dur;
+    }
+
+    // Hides elements that should only appear when JavaScript is disabled
+    function hideNoJs() {
+        var elements = document.getElementsByClassName(cl.noJs);
+        for( var i = 0; i < elements.length; i++ )
+            elements[i].style.display = "none";
     }
 
     function moveToForm() {
